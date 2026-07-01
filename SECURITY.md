@@ -1,9 +1,13 @@
-﻿# Security
+# Security Policy
 
-This repository is a public frontend and contract proof package for a GenLayer Studionet project.
+This repository contains public contract code, frontend code, deployment receipts, and test fixtures for a GenLayer Studionet project.
 
-Do not commit wallet private keys, vault files, faucet credentials, Vercel tokens, `.env` files, or local dashboard state.
+## Secret Handling
 
-Public repositories should contain public addresses, contract source, deployment metadata, tests and UI code only.
+Wallet private keys, faucet credentials, encrypted vaults, Vercel tokens, local dashboard state, and environment files are intentionally kept outside this repository.
 
-For sensitive reports, contact the repository owner privately before publishing details.
+Do not commit .env files, local vault files, wallet exports, private keys, or generated deployment state. Public addresses and finalized transaction hashes are safe to keep in deployment metadata.
+
+## Reporting
+
+Open an issue for ordinary bugs. For sensitive security findings, contact the repository owner privately before publishing details.

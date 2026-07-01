@@ -1,67 +1,57 @@
-# Veritas V2
+# Veritas
 
-A forensic image/page notary.
+Forensic page and image notary with stake-backed verdicts.
 
-This repository contains a complete GenLayer Studionet project: frontend, contract source, deployment metadata and local verification scripts.
+Veritas lets users open authenticity cases, stake on a side and ask GenLayer to review the live resource. The result is a public case record with settlement and claim paths.
 
-## Veritas Brief
+## Review Links
 
-- Project folder: `projects/30-veritas`
-- Frontend: frontend folder
-- Contract package: `contracts/` plus `deployment.json`
-- Build status: Schema-valid (24055 bytes); clean deploy + 5 write smoke txs finalized incl GenLayer jury; 12/12 read tests passed; frontend CONFIG.address repointed.
-- QA notes: Smoke opened a REAL case, backed FAKE, ran GenLayer judge, settled and claimed. Final case scored 975 authenticity / 970 confidence and settled REAL.
+| Surface | Link |
+| --- | --- |
+| Live app | https://assmore22-veritas.vercel.app |
+| GitHub | https://github.com/assmore22/veritas |
+| Contract | https://explorer-studio.genlayer.com/contracts/0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80 |
 
-## Veritas On Studionet
+## Chain Record
 
-- Network: studionet (61999)
-- Contract: [0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80](https://explorer-studio.genlayer.com/contracts/0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80)
-- Deploy tx: [0x7408dcef...324106](https://explorer-studio.genlayer.com/tx/0x7408dcef300dfe0be747905809f519b712d1ec88b83b539034311c7b0f324106)
-- Deployed at: 2026-06-24T04:02:24.870Z
-- Smoke writes recorded: 5
+- Network: GenLayer Studionet
+- Chain ID: 61999
+- Contract: `0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80`
+- Deploy transaction: [0x7408dcef...324106](https://explorer-studio.genlayer.com/tx/0x7408dcef300dfe0be747905809f519b712d1ec88b83b539034311c7b0f324106)
+- Deployed: `2026-06-24T04:02:24.870Z`
+- Source: `contracts/veritas_v2.py` (24,055 bytes)
 
-## Protocol Mechanics
+## Protocol Path
 
-- Primary source: `contracts/veritas_v2.py` (24,055 bytes)
-- Public write/action methods: 8
-- Read methods: 5
-- GenLayer features: LLM adjudication, indexed storage, append-only collections
+1. Open a case.
+2. Back REAL or FAKE.
+3. Run GenLayer jury review.
+4. Settle the case.
+5. Claim the winning side.
 
-Typical flow: `open_case` -> `claim` -> `archive` -> `back_case` -> `judge` -> `settle` -> `list_cases`
+The frontend reads case count, case detail, stake totals, stats and owner data. Contract state is public; write actions still require a connected wallet on GenLayer Studionet.
 
-Useful reads: `get_case_count`, `get_case`, `get_stakes`, `get_stats`, `get_owner`
+## Finalized Smoke
 
-The contract is deliberately larger than a one-method demo. It keeps lifecycle state, evidence records and read endpoints so the UI can show real project state instead of static copy.
+| Action | Transaction |
+| --- | --- |
+| `open_case` | [0xe1c4cd54...f70df5](https://explorer-studio.genlayer.com/tx/0xe1c4cd5428d4d3d9656d124f85b55709863215b4601d09483b09fa10a3f70df5) |
+| `back_case` | [0x3862f5ef...c4e39f](https://explorer-studio.genlayer.com/tx/0x3862f5ef6fc97ea977f525be9c90734c380782986e638dca7784860398c4e39f) |
+| `judge` | [0xd68ae0fd...c8d6df](https://explorer-studio.genlayer.com/tx/0xd68ae0fd6d88ebac6a643eaf1180b4de01d4c3bd871f0ab099342e7b71c8d6df) |
+| `settle` | [0x3934b986...dd2b46](https://explorer-studio.genlayer.com/tx/0x3934b98658634016afbfb06d61b16f75f680b760293e1e29df1ed83038dd2b46) |
+| `claim` | [0xe556eccb...0d2129](https://explorer-studio.genlayer.com/tx/0xe556eccb72b7650370e10ab52afa7f49fcbf77542f2f7cc6dfd1964b630d2129) |
 
-## Local Review Path
+## Local Run
 
-```powershell
-cd <private-workspace-root>
-npm run preview:start
-npm run preview:project -- 30-veritas
+```bash
+cd frontend
+python -m http.server 8080
 ```
 
-Open http://localhost:8080/30-veritas/.
+Open `http://localhost:8080`.
 
-## Smoke Transactions
+## Release Hygiene
 
-- open_case: [0xe1c4cd54...f70df5](https://explorer-studio.genlayer.com/tx/0xe1c4cd5428d4d3d9656d124f85b55709863215b4601d09483b09fa10a3f70df5)
-- back_case: [0x3862f5ef...c4e39f](https://explorer-studio.genlayer.com/tx/0x3862f5ef6fc97ea977f525be9c90734c380782986e638dca7784860398c4e39f)
-- judge: [0xd68ae0fd...c8d6df](https://explorer-studio.genlayer.com/tx/0xd68ae0fd6d88ebac6a643eaf1180b4de01d4c3bd871f0ab099342e7b71c8d6df)
-- settle: [0x3934b986...dd2b46](https://explorer-studio.genlayer.com/tx/0x3934b98658634016afbfb06d61b16f75f680b760293e1e29df1ed83038dd2b46)
-- claim: [0xe556eccb...0d2129](https://explorer-studio.genlayer.com/tx/0xe556eccb72b7650370e10ab52afa7f49fcbf77542f2f7cc6dfd1964b630d2129)
+The Vercel deployment is served as static frontend output. Python-only test files stay in the repo, but `requirements.txt` is excluded from Vercel staging so the host does not mis-detect the app as a Python service.
 
-## GitHub And Vercel
-
-```powershell
-cd <private-workspace-root>
-npm run publish:project -- -Project 30-veritas -Repo https://github.com/aspro45/<repo-name>.git
-```
-
-Replace `<repo-name>` with the GitHub repository name before publishing.
-
-## Secret Handling
-
-- Private keys and local vault files are not part of this repository.
-- Public addresses, contract source, deployment metadata and frontend code are safe to publish.
-- Vercel should receive only this project folder, never the workspace dashboard or vault data.
+Keep wallet private keys, vault exports, `.env` files, Vercel project state and dashboard data out of Git. This repository is for public source, UI, tests and deployment receipts only.
