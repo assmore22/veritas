@@ -35,6 +35,8 @@ body {
   line-height: 1.55;
   min-height: 100vh;
 }
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
 .mono { font-family: 'Space Mono', monospace; }
 .hidden { display: none !important; }
 .real { color: var(--real); }
