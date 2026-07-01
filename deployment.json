@@ -1,0 +1,22 @@
+{
+  "project": "30-veritas",
+  "name": "Veritas",
+  "network": "studionet",
+  "chainId": 61999,
+  "rpc": "https://studio.genlayer.com/api",
+  "explorer": "https://explorer-studio.genlayer.com",
+  "contractAddress": "0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80",
+  "deployTxHash": "0x7408dcef300dfe0be747905809f519b712d1ec88b83b539034311c7b0f324106",
+  "contractExplorer": "https://explorer-studio.genlayer.com/contracts/0x6894EA0d3e554dD5EE87Be079386F99B2CD02c80",
+  "deployer": "0x5A1a387223B86e187142B2C1F14E05400A3D4c9c",
+  "deployedAt": "2026-06-24T04:02:24.870Z",
+  "statusName": 7,
+  "smoke": {
+    "open_case": "0xe1c4cd5428d4d3d9656d124f85b55709863215b4601d09483b09fa10a3f70df5",
+    "back_case": "0x3862f5ef6fc97ea977f525be9c90734c380782986e638dca7784860398c4e39f",
+    "judge": "0xd68ae0fd6d88ebac6a643eaf1180b4de01d4c3bd871f0ab099342e7b71c8d6df",
+    "settle": "0x3934b98658634016afbfb06d61b16f75f680b760293e1e29df1ed83038dd2b46",
+    "claim": "0xe556eccb72b7650370e10ab52afa7f49fcbf77542f2f7cc6dfd1964b630d2129",
+    "caseId": "0"
+  }
+}

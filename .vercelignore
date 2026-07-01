@@ -1,0 +1,20 @@
+
+# local secrets / generated state
+.vercel/
+node_modules/
+.next/
+.env
+.env.*
+*.local
+*.log
+data/
+vault.enc.json
+wallets.json
+projects.json
+private-keys.json
+.vault-password
+*.pem
+*.p12
+*.pfx
+__pycache__/
+.pytest_cache/
