@@ -1,0 +1,14 @@
+# gltest configuration for VERITAS.
+networks:
+  default: studionet
+  studionet:
+    url: https://studio.genlayer.com/api
+    accounts:
+      - ${DEV_PRIVATE_KEY}
+    from: ${DEV_PRIVATE_KEY}
+
+paths:
+  contracts: contracts
+  artifacts: artifacts
+
+environment: .env

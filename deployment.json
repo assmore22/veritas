@@ -1,0 +1,15 @@
+{
+  "project": "30-veritas",
+  "name": "Veritas",
+  "network": "testnetBradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "explorer": "https://explorer-bradbury.genlayer.com",
+  "contractAddress": "0x70dc688c3DA860Db55c038913af428b162fEF583",
+  "deployTxHash": "0x0238d18e1eb2596182202b5b2dff71bbc7f6fbf6ec779ae029519a1b2fb0e87c",
+  "contractExplorer": "https://explorer-bradbury.genlayer.com/address/0x70dc688c3DA860Db55c038913af428b162fEF583",
+  "deployer": "0xdAa923b817C6116f2463957542FB29F6Ba671FE8",
+  "deployedAt": "2026-07-01T15:46:02.324Z",
+  "statusName": 5,
+  "smoke": {}
+}
