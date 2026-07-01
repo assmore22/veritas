@@ -72,8 +72,41 @@ function ensureReadClient() {
   if (!state.readClient) state.readClient = createClient({ chain: testnetBradbury });
   return state.readClient;
 }
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+function rpcErrorText(value) {
+  return Array.isArray(value)
+    ? value.map((item) => item?.message || item?.shortMessage || item?.details || String(item)).join(" ")
+    : (value?.message || value?.shortMessage || value?.details || String(value || ""));
+}
+function isTransientRpcError(value) {
+  return /rate limit|LimitExceededRpcError|Request exceeds defined limit|429|503|timeout|failed to fetch|network/i.test(rpcErrorText(value));
+}
+async function quietTransientRpcConsole(task) {
+  const original = console.error;
+  console.error = (...args) => {
+    const text = rpcErrorText(args);
+    if (/GenLayer RPC error/i.test(text) || isTransientRpcError(text)) return;
+    original(...args);
+  };
+  try {
+    return await task();
+  } finally {
+    console.error = original;
+  }
+}
 async function read(functionName, args = []) {
-  return ensureReadClient().readContract({ address: CONFIG.address, functionName, args, stateStatus: "accepted" });
+  let last;
+  for (let i = 0; i < 3; i++) {
+    try {
+      return await quietTransientRpcConsole(() =>
+        ensureReadClient().readContract({ address: CONFIG.address, functionName, args, stateStatus: "accepted" }));
+    } catch (error) {
+      last = error;
+      if (!isTransientRpcError(error)) throw error;
+      await sleep(550 * (i + 1));
+    }
+  }
+  throw last;
 }
 
 async function connectMetaMask() {
@@ -133,7 +166,7 @@ async function refresh() {
     renderDocket();
     renderBench();
   } catch (e) {
-    console.error(e);
+    if (!isTransientRpcError(e)) console.warn(e);
     $("#cases-loading").textContent = "Could not reach Bradbury. Is the contract deployed?";
     toast("Load failed", (e?.message || String(e)).slice(0, 160), "error");
   }
